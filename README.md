@@ -18,7 +18,7 @@ As informações são salvas no **H2 Database (em memória)** e podem ser acessa
 
 ### 1. Clonar o repositório
 ```bash
-git clone https://github.com/SEU-USUARIO/ecotrackjava.git
+git clone https://github.com/castropatrick/ecotrackjava.git
 cd ecotrackjava
 ```
 
