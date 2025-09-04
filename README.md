@@ -88,7 +88,7 @@ http://localhost:8080/h2-console
 ```
 
 2. Configure os dados de conexão:
-- **JDBC URL:** `jdbc:h2:mem:testdb`  
+- **JDBC URL:** `jdbc:h2:mem:ecotrackjava`  
 - **User:** `sa`  
 - **Password:** *(vazio)*  
 
@@ -111,4 +111,4 @@ SELECT * FROM ATIVIDADE;
 ---
 
 ## 👨‍💻 Autor
-Desenvolvido por **[SEU NOME]** – Projeto acadêmico FIAP 🌱
+Desenvolvido por **[Patrick Castro Quintana]** – Projeto acadêmico FIAP 🌱
