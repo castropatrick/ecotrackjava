@@ -1,13 +1,10 @@
 package com.example.ecotrackjava.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
-import java.time.LocalDate;
 
 @Entity
 @Data
@@ -17,14 +14,16 @@ public class Atividade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "O tipo da atividade não pode estar em branco.")
-    private String tipo;
+    @NotNull(message = "{atividade.tipo.notnull}")
+    @Enumerated(EnumType.STRING)
+    private TipoAtividade tipo;
 
-    @Positive(message = "A pontuação deve ser um valor positivo.")
+    @Positive(message = "{atividade.pontos.positive}")
     private int pontos;
 
-    @Positive(message = "A pegada de carbono evitada deve ser um valor positivo.")
+    @Positive(message = "{atividade.co2Evitado.positive}")
     private double co2Evitado;
-    
-    private LocalDate data;
+
+    @Size(max = 255, message = "{atividade.descricao.size}")
+    private String descricao;
 }
