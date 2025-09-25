@@ -1,114 +1,126 @@
-# 🌱 EcoTrack Java
 
-Projeto desenvolvido em **Spring Boot** para monitoramento de atividades sustentáveis.  
-As informações são salvas no **H2 Database (em memória)** e podem ser acessadas via API REST ou pelo console web do H2.
+# 🌱 EcoTrack Java API
 
----
+API REST desenvolvida em **Java + Spring Boot** para gerenciar atividades sustentáveis, usuários e categorias.  
+O objetivo do projeto é registrar ações ecológicas, calcular seu impacto ambiental e incentivar práticas sustentáveis, aplicando **validações, relacionamentos, persistência em banco de dados H2 e boas práticas de arquitetura**.
 
-## 🚀 Tecnologias utilizadas
-- Java 17  
-- Spring Boot (Web, Data JPA, Validation)  
-- H2 Database  
-- Maven  
-- Lombok  
+## 📚 Índice
+- [📌 Sobre o Projeto](#-sobre-o-projeto)
+- [🛠️ Tecnologias Utilizadas](#️-tecnologias-utilizadas)
+- [📁 Estrutura do Projeto](#-estrutura-do-projeto)
+- [🚀 Como Executar o Projeto](#-como-executar-o-projeto)
+- [📡 Endpoints da API](#-endpoints-da-api)
+- [🧪 Exemplos de Requisição](#-exemplos-de-requisição)
 
----
+## 📌 Sobre o Projeto
 
-## ▶️ Como rodar o projeto
+A **EcoTrack API** é um sistema backend REST que permite:
 
-### 1. Clonar o repositório
-```bash
-git clone https://github.com/castropatrick/ecotrackjava.git
-cd ecotrackjava
+- ✅ Cadastrar e gerenciar **usuários** com pontuação acumulada.  
+- ✅ Registrar **atividades sustentáveis** e calcular a redução de CO₂.  
+- ✅ Organizar ações em diferentes **categorias** (Reciclagem, Transporte, Energia etc).  
+- ✅ Aplicar **validações automáticas** e garantir a integridade dos dados.  
+
+## 🛠️ Tecnologias Utilizadas
+
+- ☕ **Java 17+**  
+- 🌱 **Spring Boot 3+**  
+- 🐘 **H2 Database** (em memória)  
+- 📦 **Maven**  
+- 🧰 **Lombok**  
+- 🔒 **Jakarta Validation**  
+- 🔄 **Spring Data JPA**
+
+## 📁 Estrutura do Projeto
+
+```
+src/
+├── main/
+│   ├── java/com/example/ecotrackjava/
+│   │   ├── controller/     # Endpoints REST
+│   │   ├── model/          # Entidades (Usuario, Atividade, Categoria)
+│   │   ├── repository/     # Interfaces JPA
+│   │   ├── validation/     # Validações personalizadas
+│   │   └── service/        # (Opcional) Lógica de negócio
+│   └── resources/
+│       ├── application.properties
+│       └── data.sql       # Dados iniciais (opcional)
+└── test/                  # Testes automatizados
 ```
 
-### 2. Rodar aplicação
-Com Maven instalado:
+## 🚀 Como Executar o Projeto
+
+### 1️⃣ - Clonar o repositório:
+```bash
+git clone https://github.com/seu-usuario/ecotrack-java.git
+```
+
+### 2️⃣ - Entrar na pasta do projeto:
+```bash
+cd ecotrack-java
+```
+
+### 3️⃣ - Rodar a aplicação:
 ```bash
 mvn spring-boot:run
 ```
 
-Ou com o wrapper:
-```bash
-./mvnw spring-boot:run
-```
+A aplicação estará disponível em:  
+👉 `http://localhost:8080`
 
-A aplicação iniciará em:
-```
-http://localhost:8080
-```
+## 📡 Endpoints da API
 
----
+### 👤 Usuários
+| Método | Endpoint         | Descrição                       |
+|--------|------------------|-------------------------------|
+| POST   | `/usuarios`      | Cria um novo usuário         |
+| GET    | `/usuarios`      | Lista todos os usuários      |
 
-## 📌 Endpoints disponíveis
+### 🌿 Atividades
+| Método | Endpoint          | Descrição                         |
+|--------|-------------------|-----------------------------------|
+| POST   | `/atividades`     | Cria uma nova atividade          |
+| GET    | `/atividades`     | Lista todas as atividades       |
 
-### 🔹 Listar todas as atividades
-```http
-GET http://localhost:8080/atividades
-```
+### 🏷️ Categorias
+| Método | Endpoint          | Descrição                      |
+|--------|-------------------|------------------------------|
+| POST   | `/categorias`     | Cria uma nova categoria      |
+| GET    | `/categorias`     | Lista todas as categorias    |
 
-### 🔹 Criar nova atividade
-```http
-POST http://localhost:8080/atividades
-Content-Type: application/json
+## 🧪 Exemplos de Requisição
 
+### 📤 Criar Usuário
+
+```json
+POST /usuarios
 {
-  "tipo": "Transporte Sustentável",
-  "pontos": 30,
-  "co2Evitado": 8.2,
-  "descricao": "Uso de bicicleta em vez de carro"
+  "nome": "Pedro Silva",
+  "email": "pedro@email.com",
+  "pontuacaoTotal": 0
 }
 ```
 
-### 🔹 Atualizar atividade existente
-```http
-PUT http://localhost:8080/atividades/1
-Content-Type: application/json
+### 📤 Criar Categoria
 
+```json
+POST /categorias
 {
-  "tipo": "Reciclagem Atualizada",
-  "pontos": 45,
-  "co2Evitado": 15.0,
-  "descricao": "Atividade revisada de coleta seletiva"
+  "nome": "Reciclagem",
+  "descricao": "Atividades relacionadas à reciclagem de materiais"
 }
 ```
 
-### 🔹 Remover atividade
-```http
-DELETE http://localhost:8080/atividades/1
+### 📤 Criar Atividade
+
+```json
+POST /atividades
+{
+  "tipo": "RECICLAGEM",
+  "pontos": 50,
+  "co2Evitado": 12.5,
+  "descricao": "Coleta seletiva de resíduos",
+  "usuario": { "id": 1 },
+  "categoria": { "id": 1 }
+}
 ```
-
----
-
-## 🗄️ Console do H2 Database
-
-1. Acesse no navegador:
-```
-http://localhost:8080/h2-console
-```
-
-2. Configure os dados de conexão:
-- **JDBC URL:** `jdbc:h2:mem:ecotrackjava`  
-- **User:** `sa`  
-- **Password:** *(vazio)*  
-
-3. Rode consultas SQL, por exemplo:
-```sql
-SELECT * FROM ATIVIDADE;
-```
-
----
-
-## 🎯 Demonstração rápida para a aula
-1. Enviar `POST /atividades` com JSON acima.  
-2. Fazer `GET /atividades` e mostrar o retorno.  
-3. Abrir `H2 Console` e rodar:
-   ```sql
-   SELECT * FROM ATIVIDADE;
-   ```
-   → Mostrar os dados persistidos no banco.
-
----
-
-## 👨‍💻 Autor
-Desenvolvido por **[Patrick Castro Quintana]** – Projeto acadêmico FIAP 🌱
