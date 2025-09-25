@@ -1,10 +1,9 @@
 package com.example.ecotrackjava.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Data
@@ -26,4 +25,14 @@ public class Atividade {
 
     @Size(max = 255, message = "{atividade.descricao.size}")
     private String descricao;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
+    @JsonIgnoreProperties("atividades")
+    private Usuario usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id", nullable = false)
+    @JsonIgnoreProperties("atividades")
+    private Categoria categoria;
 }

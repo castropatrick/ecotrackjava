@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ecotrackjava.model.Atividade;
+import com.example.ecotrackjava.model.Categoria;
+import com.example.ecotrackjava.model.Usuario;
 import com.example.ecotrackjava.repository.AtividadeRepository;
 
 import jakarta.validation.Valid;
@@ -30,9 +32,19 @@ public class AtividadeController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Atividade create(@RequestBody @Valid Atividade atividade) {
-        log.info("Cadastrando nova atividade: " + atividade);
-        return repository.save(atividade);
-    }
+@ResponseStatus(HttpStatus.CREATED)
+public Atividade create(@RequestBody @Valid Atividade atividade) {
+
+    Usuario usuario = new Usuario();
+    usuario.setId(atividade.getUsuario().getId());
+
+    Categoria categoria = new Categoria();
+    categoria.setId(atividade.getCategoria().getId());
+
+    atividade.setUsuario(usuario);
+    atividade.setCategoria(categoria);
+
+    return repository.save(atividade);
+}
+
 }
